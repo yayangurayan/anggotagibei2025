@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anggota Aktif Terpilih GIBEI UNIMED 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables and Base Styles */
+        :root {
+            --bg-main: #e6d9c6;
+            --text-header-bg: #1a4162;
+            --text-secondary: #333333;
+            --card-accent: #FFFFFF;
+            --accent-hover: #2a6da9;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-main);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem; /* Padding for mobile */
+        }
+
+        /* Header Section */
+        .header {
+            background: linear-gradient(135deg, #1f4e75, #1a4162);
+            color: #f0e9dd;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(26, 65, 98, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-logo {
+            width: 90px;
+            height: 90px;
+            background-color: var(--card-accent);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            animation: fadeInDown 0.8s ease-out;
+            padding: 8px; /* Beri sedikit ruang antara logo dan border */
+            overflow: hidden;
+        }
+
+        .header-logo img {
+            width: 100%;
+            height: auto;
+            object-fit: contain; /* Memastikan seluruh logo terlihat */
+        }
+        
+        .header h1 {
+            font-size: 1.8rem; /* Mobile first font size */
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            animation: fadeInDown 0.8s ease-out 0.2s backwards;
+        }
+
+        .header p {
+            font-size: 1rem;
+            max-width: 650px;
+            margin: 0 auto;
+            opacity: 0.9;
+            animation: fadeInDown 0.8s ease-out 0.4s backwards;
+        }
+
+        /* Search Section */
+        .search-container {
+            margin: 2.5rem 0;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .search-wrapper {
+            position: relative;
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3.5rem; /* Space for icon */
+            border-radius: 50px;
+            border: 2px solid transparent;
+            font-size: 1rem;
+            font-family: var(--font-family);
+            transition: all 0.3s ease;
+            background-color: var(--card-accent);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            width: 20px;
+            height: 20px;
+        }
+
+        #search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(26, 65, 98, 0.2);
+            border-color: var(--accent-hover);
+        }
+        
+        .results-counter {
+            text-align: center;
+            margin-top: -1.5rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Member Grid Section */
+        #member-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Mobile first: 1 column */
+            gap: 1.5rem;
+        }
+        
+        .member-card {
+            background-color: var(--card-accent);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0; /* Initially hidden for animation */
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--text-header-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(26, 65, 98, 0.12);
+        }
+        
+        .member-card:hover::before {
+            background-color: var(--accent-hover);
+        }
+
+        .member-card h3 {
+            color: var(--text-header-bg);
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .member-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding: 2.5rem 1rem;
+            background-color: var(--text-header-bg);
+            color: #e6d9c6;
+            text-align: center;
+            border-radius: 30px 30px 0 0;
+            font-size: 0.9rem;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* --- Responsive Design --- */
+        
+        /* Tablets and small desktops */
+        @media (min-width: 600px) {
+            #member-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Standard desktops */
+        @media (min-width: 900px) {
+            .container {
+                padding: 0 2rem;
+            }
+             .header h1 {
+                font-size: 2.8rem;
+            }
+            .header p {
+                font-size: 1.1rem;
+            }
+            #member-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Large desktops */
+        @media (min-width: 1200px) {
+            #member-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-content">
+            <div class="header-logo">
+                <!-- CARA 1: Ganti URL di bawah dengan URL logo Anda -->
+                <img src="logo-gibei.png" alt="Logo GIBEI UNIMED">
+
+                <!-- CARA 2: Jika file logo ada di folder yang sama, gunakan seperti ini: -->
+                <!-- <img src="logo.png" alt="Logo GIBEI UNIMED"> -->
+            </div>
+            <h1>Selamat! Inilah Anggota Aktif Terpilih GIBEI UNIMED 2025</h1>
+            <p>Setelah melalui serangkaian proses seleksi, kami dengan bangga mengumumkan nama-nama yang berhasil menjadi bagian dari keluarga besar Galeri Investasi BEI Universitas Negeri Medan.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Search Bar -->
+        <section class="search-container">
+            <div class="search-wrapper">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10,18a8,8,0,1,1,8-8A8,8,0,0,1,10,18ZM10,4a6,6,0,1,0,6,6A6,6,0,0,0,10,4Z"/><path d="M21,22a1,1,0,0,1-.71-.29l-4-4a1,1,0,0,1,1.42-1.42l4,4a1,1,0,0,1,0,1.42A1,1,0,0,1,21,22Z"/></svg>
+                <input type="text" id="search-input" placeholder="Ketik nama untuk mencari...">
+            </div>
+        </section>
+        
+        <p class="results-counter" id="results-counter"></p>
+
+        <!-- Main Content: Member List -->
+        <section id="member-grid">
+            <!-- Kartu anggota akan digenerate oleh JavaScript di sini -->
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 GIBEI UNIMED. Dirancang dengan penuh semangat.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const members = [
+                { name: 'ALEXANDER SABASTIAN PANGARIBUAN', major: 'MANAJEMEN' },
+                { name: 'AMELIA ARDANA', major: 'MANAJEMEN' },
+                { name: 'ANANDA ALUULIA SINAGA', major: 'PENDIDIKAN BAHASA INGGRIS' },
+                { name: 'TANDS SAPUTRA PARDOSI', major: 'KEWIRAUSAHAAN' },
+                { name: 'ANDIKA ZULFRI', major: 'MANAJEMEN' },
+                { name: 'ANDREAS SIMAMIRA', major: 'SASTRA INGGRIS' },
+                { name: 'ASTRID YEMIMA BA SITOHANG', major: 'KEWIRAUSAHAAN' },
+                { name: 'AULIYA AFIFAH', major: 'MANAJEMEN' },
+                { name: 'AURELA KHOIRI NASUTION', major: 'ILMU KOMPUTER' },
+                { name: 'AYU CHINTIA', major: 'MANAJEMEN' },
+                { name: 'BUNGA RIA LETIBIA SIRAT', major: 'AKUNTANSI' },
+                { name: 'CANTIKA SARMA SEICILIA SILALAHI', major: 'ILMU EKONOMI' },
+                { name: 'CHRISTIN YESKHA NAPITU', major: 'MANAJEMEN' },
+                { name: 'CRIS DIANA SIDABUTAR', major: 'MANAJEMEN' },
+                { name: 'DANU PRAGUDI', major: 'ARSITEKTUR' },
+                { name: 'DEVA FORTUNA SILABAN', major: 'STATISTIKA' },
+                { name: 'DINDA RACHEL MINADO PURBA', major: 'MANAJEMEN' },
+                { name: 'ELISABETH LETICIA MEGA NADAPOAR', major: 'BISNIS DIGITAL' },
+                { name: 'FAHAMI ADITIYA', major: 'MANAJEMEN' },
+                { name: 'FALIH ABIYYU DZAKY', major: 'BISNIS DIGITAL' },
+                { name: 'FARZAD SAHNADI RASARIBU', major: 'ILMU KOMPUTER' },
+                { name: 'FEBE GRACIA SEMBIRING', major: 'ILMU KOMPUTER' },
+                { name: 'FERY PUTRI INDAH PRATAMA SIREGAR', major: 'AKUNTANSI' },
+                { name: 'FITRI FABIOLA SIANIPAR', major: 'BISNIS DIGITAL' },
+                { name: 'GERRY AFRIANDIC SIPAYUNG', major: 'MANAJEMEN' },
+                { name: 'GOMOSES STEVENCUS BIMARMATA', major: 'PENDIDIKAN GEOGRAFI' },
+                { name: 'HAIRUNISA ASTARI', major: 'AKUNTANSI' },
+                { name: 'HEVA GRACIA MANURUNG', major: 'MANAJEMEN' },
+                { name: 'INDAH PUTRI SITOMPUL', major: 'MATEMATIKA' },
+                { name: 'JOSLIA DELPIERO SIDEBANG', major: 'BISNIS DIGITAL' },
+                { name: 'KHAIRA CISADEVA MARPAUNG', major: 'PENDIDIKAN BAHASA INGGRIS' },
+                { name: 'KIA SANTI IRAWATI PURSA', major: 'BISNIS DIGITAL' },
+                { name: 'LIA OKTAFRIANI FANDIANGAN', major: 'ILMU EKONOMI' },
+                { name: 'M. FALIZAN ANSHARI SEMBIRING', major: 'HUKUM BISNIS' },
+                { name: 'MEGA CIKTAFIA SINAGA', major: 'AKUNTANSI' },
+                { name: 'MELVA NADIRA', major: 'BISNIS DIGITAL' },
+                { name: 'NATASYAH YOLANDA', major: 'MANAJEMEN' },
+                { name: 'NAVIRA VIANDA', major: 'MANAJEMEN' },
+                { name: 'NAYLA FIRZANAH', major: 'PENDIDIKAN BAHASA INGGRIS' },
+                { name: 'PALLA BR SINAGA', major: 'BISNIS DIGITAL' },
+                { name: 'REVA LUCIANA PARAPAT', major: 'BISNIS DIGITAL' },
+                { name: 'REVA NOVA LINA HUTALURUK', major: 'SASTRA INDONESIA' },
+                { name: 'RIBKA MELISA V MANULLANG', major: 'AKUNTANSI' },
+                { name: 'RONALILI PASARIBU', major: 'MANAJEMEN' },
+                { name: 'ROSIANNA ARTA SINAGA', major: 'BISNIS DIGITAL' },
+                { name: 'SALMA ASHILLAH', major: 'ILMU KOMPUTER' },
+                { name: 'SALINA FITRY', major: 'ILMU EKONOMI' },
+                { name: 'SANIA FEBRIANI NASUTION', major: 'BISNIS DIGITAL' },
+                { name: 'SITI NAILA RAHMI', major: 'ILMU EKONOMI' },
+                { name: 'SURYA PILKADA PASARISU', major: 'FAKULTAS ILMU KEOLAHRAGAAN' },
+                { name: 'WINDAH FRAWYTA LESTARY SINAGA', major: 'MANAJEMEN' },
+                { name: 'WINONA KETSADLI', major: 'AKUNTANSI' },
+                { name: 'WULAN ERDIANTI PUTRI', major: 'MANAJEMEN' },
+                { name: 'YUNITA SHINTAULI PASARIBU', major: 'BIMBINGAN DAN KONSELING' },
+                { name: 'ZAKY ATILA CAFRIANO HUTABARAT', major: 'PENDIDIKAN TEKNIK ELEKTRO' }
+            ];
+
+            const memberGrid = document.getElementById('member-grid');
+            const searchInput = document.getElementById('search-input');
+            const resultsCounter = document.getElementById('results-counter');
+
+            // Function to display members
+            const displayMembers = (memberList) => {
+                memberGrid.innerHTML = ''; // Clear previous results
+                
+                // Update counter
+                if (searchInput.value.trim() !== '') {
+                    resultsCounter.textContent = `Menampilkan ${memberList.length} dari ${members.length} anggota.`;
+                    resultsCounter.style.opacity = '1';
+                } else {
+                    resultsCounter.style.opacity = '0';
+                }
+                
+                if (memberList.length === 0) {
+                    memberGrid.innerHTML = '<div class="no-results">Nama tidak ditemukan. Silakan coba kata kunci lain.</div>';
+                    return;
+                }
+                
+                memberList.forEach((member, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'member-card';
+                    card.innerHTML = `
+                        <h3>${member.name}</h3>
+                        <p>${member.major}</p>
+                    `;
+                    // Staggered animation delay
+                    card.style.animationDelay = `${index * 60}ms`;
+                    memberGrid.appendChild(card);
+                });
+            };
+
+            // Search functionality
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                const filteredMembers = members.filter(member => 
+                    member.name.toLowerCase().includes(searchTerm)
+                );
+                displayMembers(filteredMembers);
+            });
+
+            // Initial display of all members
+            displayMembers(members);
+        });
+    </script>
+
+</body>
+</html>
