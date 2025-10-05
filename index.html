@@ -12,10 +12,13 @@
         /* CSS Variables and Base Styles */
         :root {
             --bg-main: #e6d9c6;
+            --bg-soft-gradient: linear-gradient(180deg, #e6d9c6 0%, #d1c4b3 100%);
             --text-header-bg: #1a4162;
             --text-secondary: #333333;
             --card-accent: #FFFFFF;
             --accent-hover: #2a6da9;
+            --cta-button-bg: #c89c54;
+            --cta-button-hover-bg: #b38944;
             --font-family: 'Poppins', sans-serif;
         }
 
@@ -31,7 +34,7 @@
 
         body {
             font-family: var(--font-family);
-            background-color: var(--bg-main);
+            background: var(--bg-soft-gradient);
             color: var(--text-secondary);
             line-height: 1.7;
             text-rendering: optimizeLegibility;
@@ -43,7 +46,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem; /* Padding for mobile */
+            padding: 0 1rem;
         }
 
         /* Header Section */
@@ -53,7 +56,6 @@
             padding: 3rem 1.5rem;
             text-align: center;
             border-radius: 0 0 30px 30px;
-            margin-bottom: 2rem;
             box-shadow: 0 8px 32px rgba(26, 65, 98, 0.2);
             position: relative;
             overflow: hidden;
@@ -86,18 +88,18 @@
             justify-content: center;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
             animation: fadeInDown 0.8s ease-out;
-            padding: 8px; /* Beri sedikit ruang antara logo dan border */
+            padding: 8px;
             overflow: hidden;
         }
 
         .header-logo img {
             width: 100%;
             height: auto;
-            object-fit: contain; /* Memastikan seluruh logo terlihat */
+            object-fit: contain;
         }
         
         .header h1 {
-            font-size: 1.8rem; /* Mobile first font size */
+            font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 0.75rem;
             animation: fadeInDown 0.8s ease-out 0.2s backwards;
@@ -110,11 +112,36 @@
             opacity: 0.9;
             animation: fadeInDown 0.8s ease-out 0.4s backwards;
         }
+        
+        /* Call to Action Button */
+        .cta-container {
+            padding: 2.5rem 0;
+            text-align: center;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--cta-button-bg);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(200, 156, 84, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--cta-button-hover-bg);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(200, 156, 84, 0.5);
+        }
 
         /* Search Section */
         .search-container {
-            margin: 2.5rem 0;
             animation: fadeInUp 0.8s ease-out;
+            margin-bottom: 2.5rem;
         }
         
         .search-wrapper {
@@ -125,7 +152,7 @@
 
         #search-input {
             width: 100%;
-            padding: 1rem 1.5rem 1rem 3.5rem; /* Space for icon */
+            padding: 1rem 1.5rem 1rem 3.5rem;
             border-radius: 50px;
             border: 2px solid transparent;
             font-size: 1rem;
@@ -159,12 +186,13 @@
             font-weight: 600;
             opacity: 0;
             transition: opacity 0.3s ease;
+            height: 1.5em; /* Reserve space to prevent layout shift */
         }
 
         /* Member Grid Section */
         #member-grid {
             display: grid;
-            grid-template-columns: 1fr; /* Mobile first: 1 column */
+            grid-template-columns: 1fr;
             gap: 1.5rem;
         }
         
@@ -173,11 +201,20 @@
             padding: 1.5rem;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0; /* Initially hidden for animation */
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             position: relative;
             overflow: hidden;
+            /* Initial state for lazy loading animation */
+            opacity: 0;
+            transform: translateY(30px);
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                        box-shadow 0.4s ease, 
+                        opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        /* State when card is visible (triggered by JS) */
+        .member-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .member-card::before {
@@ -192,8 +229,8 @@
         }
 
         .member-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(26, 65, 98, 0.12);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(26, 65, 98, 0.15);
         }
         
         .member-card:hover::before {
@@ -232,64 +269,19 @@
         }
 
         /* Animation Keyframes */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes popIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
         /* --- Responsive Design --- */
-        
-        /* Tablets and small desktops */
-        @media (min-width: 600px) {
-            #member-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        /* Standard desktops */
+        @media (min-width: 600px) { #member-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 900px) {
-            .container {
-                padding: 0 2rem;
-            }
-             .header h1 {
-                font-size: 2.8rem;
-            }
-            .header p {
-                font-size: 1.1rem;
-            }
-            #member-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .container { padding: 0 2rem; }
+            .header h1 { font-size: 2.8rem; }
+            .header p { font-size: 1.1rem; }
+            #member-grid { grid-template-columns: repeat(3, 1fr); }
         }
-        
-        /* Large desktops */
-        @media (min-width: 1200px) {
-            #member-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
+        @media (min-width: 1200px) { #member-grid { grid-template-columns: repeat(4, 1fr); } }
     </style>
 </head>
 <body>
@@ -297,11 +289,8 @@
     <header class="header">
         <div class="header-content">
             <div class="header-logo">
-                <!-- CARA 1: Ganti URL di bawah dengan URL logo Anda -->
-                <img src="logo-gibei.png" alt="Logo GIBEI UNIMED">
-
-                <!-- CARA 2: Jika file logo ada di folder yang sama, gunakan seperti ini: -->
-                <!-- <img src="logo.png" alt="Logo GIBEI UNIMED"> -->
+                 <!-- Pastikan file 'logo-gibei.png' berada di folder yang sama dengan file HTML ini -->
+                <img src="logo-gibei.png" alt="Logo GIBEI UNIMED" loading="lazy">
             </div>
             <h1>Selamat! Inilah Anggota Aktif Terpilih GIBEI UNIMED 2025</h1>
             <p>Setelah melalui serangkaian proses seleksi, kami dengan bangga mengumumkan nama-nama yang berhasil menjadi bagian dari keluarga besar Galeri Investasi BEI Universitas Negeri Medan.</p>
@@ -309,6 +298,11 @@
     </header>
 
     <main class="container">
+        <!-- CTA Button -->
+        <section class="cta-container">
+            <a href="https://forms.gle/ctxLc8JQPHBGCn5A6" target="_blank" class="cta-button">Daftar Ulang Sekarang</a>
+        </section>
+
         <!-- Search Bar -->
         <section class="search-container">
             <div class="search-wrapper">
@@ -335,56 +329,56 @@
             const members = [
                 { name: 'ALEXANDER SABASTIAN PANGARIBUAN', major: 'MANAJEMEN' },
                 { name: 'AMELIA ARDANA', major: 'MANAJEMEN' },
-                { name: 'ANANDA ALUULIA SINAGA', major: 'PENDIDIKAN BAHASA INGGRIS' },
-                { name: 'TANDS SAPUTRA PARDOSI', major: 'KEWIRAUSAHAAN' },
+                { name: 'ANANDA AULIA SINAGA', major: 'PENDIDIKAN BAHASA INGGRIS' },
+                { name: 'ANDI SAPUTRA PARDOSI', major: 'KEWIRAUSAHAAN' },
                 { name: 'ANDIKA ZULFRI', major: 'MANAJEMEN' },
-                { name: 'ANDREAS SIMAMIRA', major: 'SASTRA INGGRIS' },
-                { name: 'ASTRID YEMIMA BA SITOHANG', major: 'KEWIRAUSAHAAN' },
+                { name: 'ANDREAS SIMAMORA', major: 'SASTRA INGGRIS' },
+                { name: 'ASTRID YEMIMA BR SITOHANG', major: 'KEWIRAUSAHAAN' },
                 { name: 'AULIYA AFIFAH', major: 'MANAJEMEN' },
                 { name: 'AURELA KHOIRI NASUTION', major: 'ILMU KOMPUTER' },
                 { name: 'AYU CHINTIA', major: 'MANAJEMEN' },
-                { name: 'BUNGA RIA LETIBIA SIRAT', major: 'AKUNTANSI' },
+                { name: 'BUNGA RIA LETISIA SIRAT', major: 'AKUNTANSI' },
                 { name: 'CANTIKA SARMA SEICILIA SILALAHI', major: 'ILMU EKONOMI' },
-                { name: 'CHRISTIN YESKHA NAPITU', major: 'MANAJEMEN' },
+                { name: 'CHRISTIN YESIKHA NAPITU', major: 'MANAJEMEN' },
                 { name: 'CRIS DIANA SIDABUTAR', major: 'MANAJEMEN' },
-                { name: 'DANU PRAGUDI', major: 'ARSITEKTUR' },
-                { name: 'DEVA FORTUNA SILABAN', major: 'STATISTIKA' },
+                { name: 'DANU PRABUDI', major: 'ARSITEKTUR' },
+                { name: 'DEWI FORTUNA SILABAN', major: 'STATISTIKA' },
                 { name: 'DINDA RACHEL MINADO PURBA', major: 'MANAJEMEN' },
-                { name: 'ELISABETH LETICIA MEGA NADAPOAR', major: 'BISNIS DIGITAL' },
-                { name: 'FAHAMI ADITIYA', major: 'MANAJEMEN' },
+                { name: 'ELISABETH LETICIA MEGA NADAPDAP', major: 'BISNIS DIGITAL' },
+                { name: 'FAHMI ADITIYA', major: 'MANAJEMEN' },
                 { name: 'FALIH ABIYYU DZAKY', major: 'BISNIS DIGITAL' },
-                { name: 'FARZAD SAHNADI RASARIBU', major: 'ILMU KOMPUTER' },
+                { name: 'FARZAD SAHNADI PASARIBU', major: 'ILMU KOMPUTER' },
                 { name: 'FEBE GRACIA SEMBIRING', major: 'ILMU KOMPUTER' },
-                { name: 'FERY PUTRI INDAH PRATAMA SIREGAR', major: 'AKUNTANSI' },
+                { name: 'FEBY PUTRI INDAH PRATAMA SIREGAR', major: 'AKUNTANSI' },
                 { name: 'FITRI FABIOLA SIANIPAR', major: 'BISNIS DIGITAL' },
-                { name: 'GERRY AFRIANDIC SIPAYUNG', major: 'MANAJEMEN' },
-                { name: 'GOMOSES STEVENCUS BIMARMATA', major: 'PENDIDIKAN GEOGRAFI' },
+                { name: 'GERRY AFRIANDO SIPAYUNG', major: 'MANAJEMEN' },
+                { name: 'GOMOSES STEVENCUS SIMARMATA', major: 'PENDIDIKAN GEOGRAFI' },
                 { name: 'HAIRUNISA ASTARI', major: 'AKUNTANSI' },
                 { name: 'HEVA GRACIA MANURUNG', major: 'MANAJEMEN' },
                 { name: 'INDAH PUTRI SITOMPUL', major: 'MATEMATIKA' },
-                { name: 'JOSLIA DELPIERO SIDEBANG', major: 'BISNIS DIGITAL' },
+                { name: 'JOSUA DELPIERO SIDEBANG', major: 'BISNIS DIGITAL' },
                 { name: 'KHAIRA CISADEVA MARPAUNG', major: 'PENDIDIKAN BAHASA INGGRIS' },
-                { name: 'KIA SANTI IRAWATI PURSA', major: 'BISNIS DIGITAL' },
-                { name: 'LIA OKTAFRIANI FANDIANGAN', major: 'ILMU EKONOMI' },
-                { name: 'M. FALIZAN ANSHARI SEMBIRING', major: 'HUKUM BISNIS' },
-                { name: 'MEGA CIKTAFIA SINAGA', major: 'AKUNTANSI' },
-                { name: 'MELVA NADIRA', major: 'BISNIS DIGITAL' },
+                { name: 'KIA SANTI IRAWATI PURBA', major: 'BISNIS DIGITAL' },
+                { name: 'LIA OKTAFRIANI PANDIANGAN', major: 'ILMU EKONOMI' },
+                { name: 'M. FAUZAN ANSHARI SEMBIRING', major: 'HUKUM BISNIS' },
+                { name: 'MEGA OKTAFIA SINAGA', major: 'AKUNTANSI' },
+                { name: 'MELVA NAOMIRA', major: 'BISNIS DIGITAL' },
                 { name: 'NATASYAH YOLANDA', major: 'MANAJEMEN' },
                 { name: 'NAVIRA VIANDA', major: 'MANAJEMEN' },
                 { name: 'NAYLA FIRZANAH', major: 'PENDIDIKAN BAHASA INGGRIS' },
-                { name: 'PALLA BR SINAGA', major: 'BISNIS DIGITAL' },
+                { name: 'PAULA BR SINAGA', major: 'BISNIS DIGITAL' },
                 { name: 'REVA LUCIANA PARAPAT', major: 'BISNIS DIGITAL' },
-                { name: 'REVA NOVA LINA HUTALURUK', major: 'SASTRA INDONESIA' },
+                { name: 'REVA NOVA LINA HUTAURUK', major: 'SASTRA INDONESIA' },
                 { name: 'RIBKA MELISA V MANULLANG', major: 'AKUNTANSI' },
-                { name: 'RONALILI PASARIBU', major: 'MANAJEMEN' },
+                { name: 'RONAULI PASARIBU', major: 'MANAJEMEN' },
                 { name: 'ROSIANNA ARTA SINAGA', major: 'BISNIS DIGITAL' },
                 { name: 'SALMA ASHILLAH', major: 'ILMU KOMPUTER' },
-                { name: 'SALINA FITRY', major: 'ILMU EKONOMI' },
+                { name: 'SALWA FITRY', major: 'ILMU EKONOMI' },
                 { name: 'SANIA FEBRIANI NASUTION', major: 'BISNIS DIGITAL' },
                 { name: 'SITI NAILA RAHMI', major: 'ILMU EKONOMI' },
                 { name: 'SURYA PILKADA PASARISU', major: 'FAKULTAS ILMU KEOLAHRAGAAN' },
                 { name: 'WINDAH FRAWYTA LESTARY SINAGA', major: 'MANAJEMEN' },
-                { name: 'WINONA KETSADLI', major: 'AKUNTANSI' },
+                { name: 'WINONA KEYSADLI', major: 'AKUNTANSI' },
                 { name: 'WULAN ERDIANTI PUTRI', major: 'MANAJEMEN' },
                 { name: 'YUNITA SHINTAULI PASARIBU', major: 'BIMBINGAN DAN KONSELING' },
                 { name: 'ZAKY ATILA CAFRIANO HUTABARAT', major: 'PENDIDIKAN TEKNIK ELEKTRO' }
@@ -394,13 +388,30 @@
             const searchInput = document.getElementById('search-input');
             const resultsCounter = document.getElementById('results-counter');
 
+            // --- Lazy Loading with Intersection Observer ---
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1
+            });
+
             // Function to display members
             const displayMembers = (memberList) => {
-                memberGrid.innerHTML = ''; // Clear previous results
+                memberGrid.innerHTML = ''; 
                 
                 // Update counter
-                if (searchInput.value.trim() !== '') {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm !== '') {
                     resultsCounter.textContent = `Menampilkan ${memberList.length} dari ${members.length} anggota.`;
+                    resultsCounter.style.opacity = '1';
+                } else if (memberList.length === members.length) {
+                    resultsCounter.textContent = `Total ${members.length} anggota terpilih.`;
                     resultsCounter.style.opacity = '1';
                 } else {
                     resultsCounter.style.opacity = '0';
@@ -411,22 +422,19 @@
                     return;
                 }
                 
-                memberList.forEach((member, index) => {
+                memberList.forEach(member => {
                     const card = document.createElement('div');
                     card.className = 'member-card';
-                    card.innerHTML = `
-                        <h3>${member.name}</h3>
-                        <p>${member.major}</p>
-                    `;
-                    // Staggered animation delay
-                    card.style.animationDelay = `${index * 60}ms`;
+                    card.innerHTML = `<h3>${member.name}</h3><p>${member.major}</p>`;
                     memberGrid.appendChild(card);
+                    // Observe each new card for lazy loading
+                    observer.observe(card);
                 });
             };
 
             // Search functionality
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase().trim();
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase().trim();
                 const filteredMembers = members.filter(member => 
                     member.name.toLowerCase().includes(searchTerm)
                 );
